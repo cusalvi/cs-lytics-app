@@ -37,8 +37,8 @@ const _getEntries = async (contentType: string, query: Record<string, any>, vari
     let entries;
     if (variantParam) {
       console.log("variantParam should be 0_0 ----->", variantParam)
-      // const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
-      const variantAlias = Personalize.getVariantParam();
+      const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
+      // const variantAlias = Personalize.getVariantParam();
       entries = await entriesCall.variants(variantAlias).query(query).find();
     } else {
       entries = await entriesCall.query(query).find();

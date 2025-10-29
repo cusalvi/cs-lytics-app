@@ -245,7 +245,7 @@ export default function Home(searchParams: Record<string, string>) {
       </nav>
 
       {/* Hero Section */}
-        
+      <section className="relative min-h-screen flex items-center overflow-hidden">  
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-purple-800">
           <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent"></div>
