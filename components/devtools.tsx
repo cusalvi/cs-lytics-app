@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Tooltip from './tool-tip';
 
-const DynamicJsonViewer = dynamic(() => import('@textea/json-viewer').then((module) => ({ default: module.JsonViewer })), { ssr: false });
+// const DynamicJsonViewer = dynamic(() => import('@textea/json-viewer').then((module) => ({ default: module.JsonViewer })), { ssr: false });
 
 function filterObject(inputObject: any) {
   const unWantedProps = [
@@ -86,15 +86,15 @@ const DevTools = ({ response }: any) => {
           <div className="modal-body">
             {response ? (
               <pre id="jsonViewer">
-                {response && (
-                  <DynamicJsonViewer
-                    value={filteredJson}
-                    defaultInspectDepth={1}
-                    rootName="response"
-                    displayDataTypes={false}
-                    enableClipboard={false}
-                    style={{ color: '#C8501E' }}
-                  />
+                {response && (<></>
+                  // <DynamicJsonViewer
+                  //   value={filteredJson}
+                  //   defaultInspectDepth={1}
+                  //   rootName="response"
+                  //   displayDataTypes={false}
+                  //   enableClipboard={false}
+                  //   style={{ color: '#C8501E' }}
+                  // />
                 )}
               </pre>
             ) : (

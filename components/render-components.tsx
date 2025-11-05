@@ -12,13 +12,14 @@ import HeroBanner from './hero-banner';
 import { RenderProps } from "../typescript/component";
 
 export default function RenderComponents(props: RenderProps) {
-  const { pageComponent, entryUid, contentTypeUid, locale } = props;
+  const { entryUid, contentTypeUid, locale, pageComponent } = props;
   console.log("Props in renderComponent ---->", props, pageComponent)
   return (
     <div
       data-pageref={entryUid}
       data-contenttype={contentTypeUid}
       data-locale={locale}
+      data-pagecomponent={pageComponent}
     >
       {pageComponent?.hero_banner && 
       // <section className="py-16 text-center bg-white border-b">
@@ -58,14 +59,14 @@ export default function RenderComponents(props: RenderProps) {
                 <div className="space-y-6">
                   <div className="inline-flex items-center space-x-2 bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium">
                     <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <span>{pageComponent?.product_showcase_section.group[0].title}</span>
+                    <span>{pageComponent?.product_showcase_section?.group[0]?.title}</span>
                   </div>
                   <h3 className="text-3xl font-bold text-gray-900">{pageComponent?.product_showcase_section.group[0].h3}</h3>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    {pageComponent?.product_showcase_section.group[0].description}
+                    {pageComponent?.product_showcase_section?.group[0]?.description}
                   </p>
                   <ul className="space-y-3">
-                    {pageComponent?.product_showcase_section.group[0]?.feature.map((feature, index) => (
+                    {pageComponent?.product_showcase_section?.group[0]?.feature.map((feature, index) => (
                       <li key={index} className="flex items-center space-x-3">
                         <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                           <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -112,7 +113,7 @@ export default function RenderComponents(props: RenderProps) {
                     <div className="space-y-4">
                       <h4 className="font-semibold text-white mb-6">{pageComponent?.product_showcase_section?.group[1].h4}</h4>
                       <div className="grid grid-cols-2 gap-4">
-                        {pageComponent?.product_showcase_section.group[1]?.metric.value.map((metric, index) => (
+                        {pageComponent?.product_showcase_section?.group[1]?.metric?.value.map((metric, index) => (
                         <div key={index} className="bg-white/20 rounded-lg p-4">
                           <div className="text-2xl font-bold">{metric.value}</div>
                           <div className="text-sm opacity-90">{metric.key}</div>

@@ -1,11 +1,11 @@
-import { Config, Region, LivePreview, Stack } from "contentstack";
-import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
-const envConfig = process.env.CONTENTSTACK_API_KEY
-  ? process.env
-  : publicRuntimeConfig;
+// import { Config, Region, LivePreview, Stack } from "contentstack";
+// import getConfig from "next/config";
+// const { publicRuntimeConfig } = getConfig();
+// const envConfig = process.env.CONTENTSTACK_API_KEY
+//   ? process.env
+//   : publicRuntimeConfig;
 
-console.log("envConfig in utils.js---->", envConfig);
+// console.log("envConfig in utils.js---->", envConfig);
 // const {
 //   CONTENTSTACK_API_KEY,
 //   CONTENTSTACK_DELIVERY_TOKEN,

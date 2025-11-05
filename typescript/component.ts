@@ -63,6 +63,11 @@ type Widget = {
   $: AdditionalParam;
 }
 
+export type TrustedBrands = {
+  heading: string;
+  brands: [string];
+}
+
 export type Component = {
   hero_banner: Banner;
   trusted_brands_section?: TrustedBrands;
@@ -76,9 +81,12 @@ export type Component = {
   widget?: Widget;
 }
 
-export type TrustedBrands = {
-  heading: string;
-  brands: string[];
+interface MetricItem {
+  key: string;
+  value: string;
+}
+interface Metric {
+  value: MetricItem[]; // ensure this is an array of objects
 }
 
 export type GroupData = {
@@ -87,14 +95,14 @@ export type GroupData = {
   description: string;
   feature: string[];
   h4?: string;
-  metric?: object;
+  metric?: Metric;
 }
 
 export type ProductShowcaseSection = {
   title: string;
   h3: string
   description: string;
-  group: GroupData;
+  group: GroupData[];
 }
 
 export type SectionWithBucket = {
@@ -155,5 +163,5 @@ export type RenderProps = {
   contentTypeUid: string;
   entryUid: string;
   locale: string;
-  pageComponent:Component[];
+  pageComponent: Component;
 }

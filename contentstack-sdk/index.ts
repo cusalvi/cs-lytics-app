@@ -1,37 +1,43 @@
 // import contentstack from '@contentstack/delivery-sdk';
-import * as Utils from "@contentstack/utils";
-import getConfig from "next/config";
+// import * as Utils from "@contentstack/utils";
+// import getConfig from "next/config";
 // import {
 //   customHostUrl,
 //   initializeContentStackSdk,
 //   isValidCustomHostUrl,
 // } from "./utils";
 
-type GetEntry = {
-  contentTypeUid: string;
-  referenceFieldPath: string[] | undefined;
-  jsonRtePath: string[] | undefined;
-};
+// type GetEntry = {
+//   contentTypeUid: string;
+//   referenceFieldPath: string[] | undefined;
+//   jsonRtePath: string[] | undefined;
+// };
 
-type GetEntryByUrl = {
-  entryUrl: string | undefined;
-  contentTypeUid: string;
-  referenceFieldPath: string[] | undefined;
-  jsonRtePath: string[] | undefined;
-};
+// type GetEntryByUrl = {
+//   entryUrl: string | undefined;
+//   contentTypeUid: string;
+//   referenceFieldPath: string[] | undefined;
+//   jsonRtePath: string[] | undefined;
+// };
 
-const { publicRuntimeConfig } = getConfig();
-const envConfig = process.env.CONTENTSTACK_API_KEY
-  ? process.env
-  : publicRuntimeConfig;
+// const { publicRuntimeConfig } = getConfig();
+// const envConfig = process.env.CONTENTSTACK_API_KEY
+//   ? process.env
+//   : publicRuntimeConfig;
 
-console.log("envConfig in utils.js---->", envConfig);
+// console.log("envConfig in utils.js---->", envConfig);
 
 // let customHostBaseUrl = envConfig.CONTENTSTACK_API_HOST as string;
 // customHostBaseUrl = customHostUrl(customHostBaseUrl);
 
 // // SDK initialization
 // const Stack = initializeContentStackSdk();
+// const Stack = contentstack.stack({
+//   apiKey: process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY,
+//   deliveryToken: process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN,
+//   environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT,
+//   host: process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_API_HOST,
+// });
 
 // // set host url only for custom host or non prod base url's
 // if (isValidCustomHostUrl(customHostBaseUrl)) {
@@ -59,14 +65,14 @@ console.log("envConfig in utils.js---->", envConfig);
 //   span: (node: any, next: any) => next(node.children),
 // };
 
-// /**
-//  *
-//  * fetches all the entries from specific content-type
-//  * @param {* content-type uid} contentTypeUid
-//  * @param {* reference field name} referenceFieldPath
-//  * @param {* Json RTE path} jsonRtePath
-//  *
-//  */
+/**
+ *
+ * fetches all the entries from specific content-type
+ * @param {* content-type uid} contentTypeUid
+ * @param {* reference field name} referenceFieldPath
+ * @param {* Json RTE path} jsonRtePath
+ *
+ */
 //  export const getEntry = ({
 //     contentTypeUid,
 //     referenceFieldPath,

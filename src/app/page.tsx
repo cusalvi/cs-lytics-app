@@ -8,7 +8,7 @@ import { getEntries } from "../../helper/getEntries"
 // import { fetchHomePage, initializeLP, Stack } from "./cs-sdk/index.js";
 // import { ChevronDown, Play, ArrowRight, Menu, X, Star, Users, Globe, Zap } from "lucide-react"
 import Personalize from "@contentstack/personalize-edge-sdk";
-import "./page.css"
+// import "./page.css"
 import RenderComponents from "../../components/render-components";
 import { Component } from "../../typescript/component";
 // import { Image } from "../typescript/action";
@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic';
 
 interface page {
   page_components: [];
-  pageComponent: Component[];
+  pageComponent: Component;
   uid: string;
   locale: string;
   url: string;
@@ -29,7 +29,7 @@ interface page {
 export default function Home(searchParams: Record<string, string>) {
   // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [scrollY, setScrollY] = useState<number>(0);
-  const [getEntry, setEntry] = useState<page>({});
+  const [getEntry, setEntry] = useState<page>();
   
 // personalize
 
@@ -45,9 +45,14 @@ export default function Home(searchParams: Record<string, string>) {
     // let variantParam = decodeURIComponent(
     //   searchParams[Personalize.VARIANT_QUERY_PARAM]
     // );
-    let variantParam = "0_0";
+    
+    // let lyticsSegments = jstag.getSegments();
 
-    let [homepageEntry] = await getEntries(
+    // Identify/extract current segment from lyticsSegments and assign variantParam accordingly
+    // For Chrome = 0_0
+    // For Firefox = 0_1
+    const variantParam = "0_0";
+    const [homepageEntry] = await getEntries(
       process.env.NEXT_PUBLIC_CONTENTSTACK_WEBPAGE_CONTENTTYPE_UID as string,
       {},
       variantParam,
@@ -114,28 +119,28 @@ export default function Home(searchParams: Record<string, string>) {
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                         <a href="/platforms/headless-cms" target="_self" data-test-id="nav-link"
-                                            tabIndex="0">Headless Content Management</a>
+                                            tabIndex={0}>Headless Content Management</a>
                                     </li>
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                         <a href="/platforms/real-time-cdp" target="_self" data-test-id="nav-link"
-                                            tabIndex="0">Real-time Data and Insights</a>
+                                            tabIndex={0}>Real-time Data and Insights</a>
                                     </li>
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                         <a href="/platforms/omnichannel-personalization" target="_self"
-                                            data-test-id="nav-link" tabIndex="0">Omnichannel Personalization</a>
+                                            data-test-id="nav-link" tabIndex={0}>Omnichannel Personalization</a>
                                     </li>
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                           <a
-                                            href="/platforms/ai" target="_self" data-test-id="nav-link" tabIndex="0">Agents
+                                            href="/platforms/ai" target="_self" data-test-id="nav-link" tabIndex={0}>Agents
                                             &amp; Automations</a></li>
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                           <a
                                             href="/platforms/launch" target="_self" data-test-id="nav-link"
-                                            tabIndex="0">Front-end Hosting</a></li>
+                                            tabIndex={0}>Front-end Hosting</a></li>
                                 </ul>
                             </div>
                             <div className="mb-6 last:mb-0">
@@ -144,25 +149,25 @@ export default function Home(searchParams: Record<string, string>) {
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                         <a href="/roles/developers" target="_self" data-test-id="nav-link"
-                                            tabIndex="0">Developer &amp; IT</a></li>
+                                            tabIndex={0}>Developer &amp; IT</a></li>
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                         <a href="/roles/business" target="_self" data-test-id="nav-link"
-                                            tabIndex="0">Business users</a></li>
+                                            tabIndex={0}>Business users</a></li>
                                     <li
                                         className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                        <a href="/roles/leaders" target="_self" data-test-id="nav-link" tabIndex="0">Digital
+                                        <a href="/roles/leaders" target="_self" data-test-id="nav-link" tabIndex={0}>Digital
                                             leaders</a></li>
                                 </ul>
                             </div>
-                        </div><a href="/solutions" target="_self" data-test-id="nav-link-button" tabIndex="-1"><button
+                        </div><a href="/solutions" target="_self" data-test-id="nav-link-button" tabIndex={-1}><button
                                 className="docs-theme-label flex w-full items-center justify-between bg-dark-light-ameth px-6 py-4 text-base font-normal text-ameth-white hover:bg-violet500-violetLight hover:text-light-black">Explore
                                 Solutions<span className="ml-2">→</span></button></a>
                     </div>
                 </li>
                 <li className="group/dropdown relative" data-dropdown="true"><button
                         className="relative z-10 flex cursor-pointer items-center gap-1 py-2 text-gray-black group-focus-within/dropdown:text-light-black group-hover/dropdown:text-light-black group-active/dropdown:text-light-black hover:text-light-black focus:text-light-black active:text-light-black"
-                        tabIndex="0" aria-haspopup="true" aria-expanded="false">Resources</button>
+                        tabIndex={0} aria-haspopup="true" aria-expanded="false">Resources</button>
                     <div
                         className="absolute top-full left-1/2 z-50 mt-4.5 hidden w-[327px] -translate-x-1/4 transform flex-col border-transparent bg-shadow-light text-light-black shadow-lg transition-all duration-150 ease-in-out group-focus-within/dropdown:block group-hover/dropdown:block">
                         <div className="absolute -top-[25px] left-0 h-[38px] w-full bg-transparent"></div>
@@ -170,33 +175,33 @@ export default function Home(searchParams: Record<string, string>) {
                             <ul className="flex flex-col gap-3 text-base">
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/academy" target="_self" data-test-id="nav-link" tabIndex="0">Academy</a></li>
+                                    <a href="/academy" target="_self" data-test-id="nav-link" tabIndex={0}>Academy</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/case-studies" target="_self" data-test-id="nav-link" tabIndex="0">Case
+                                    <a href="/case-studies" target="_self" data-test-id="nav-link" tabIndex={0}>Case
                                         studies</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/docs" target="_self" data-test-id="nav-link" tabIndex="0">Documentation</a>
+                                    <a href="/docs" target="_self" data-test-id="nav-link" tabIndex={0}>Documentation</a>
                                 </li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/resources" target="_self" data-test-id="nav-link" tabIndex="0">Resources
+                                    <a href="/resources" target="_self" data-test-id="nav-link" tabIndex={0}>Resources
                                         center</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/blog" target="_self" data-test-id="nav-link" tabIndex="0">Blog</a></li>
+                                    <a href="/blog" target="_self" data-test-id="nav-link" tabIndex={0}>Blog</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                     <a href="https://discord.com/invite/NyWJ68gdDw" target="_blank" data-test-id="nav-link"
-                                        tabIndex="0">Developer community</a></li>
+                                        tabIndex={0}>Developer community</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/platform-updates" target="_self" data-test-id="nav-link" tabIndex="0">Product
+                                    <a href="/platform-updates" target="_self" data-test-id="nav-link" tabIndex={0}>Product
                                         updates</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/events" target="_self" data-test-id="nav-link" tabIndex="0">Events</a></li>
+                                    <a href="/events" target="_self" data-test-id="nav-link" tabIndex={0}>Events</a></li>
                             </ul>
                         </div>
                     </div>
@@ -207,7 +212,7 @@ export default function Home(searchParams: Record<string, string>) {
                         data-test-id="main-nav-link">Partners</a></li>
                 <li className="group/dropdown relative" data-dropdown="true"><button
                         className="relative z-10 flex cursor-pointer items-center gap-1 py-2 text-gray-black group-focus-within/dropdown:text-light-black group-hover/dropdown:text-light-black group-active/dropdown:text-light-black hover:text-light-black focus:text-light-black active:text-light-black"
-                        tabIndex="0" aria-haspopup="true" aria-expanded="false">Company</button>
+                        tabIndex={0} aria-haspopup="true" aria-expanded="false">Company</button>
                     <div
                         className="absolute top-full left-1/2 z-50 mt-4.5 hidden w-[327px] -translate-x-1/4 transform flex-col border-transparent bg-shadow-light text-light-black shadow-lg transition-all duration-150 ease-in-out group-focus-within/dropdown:block group-hover/dropdown:block">
                         <div className="absolute -top-[25px] left-0 h-[38px] w-full bg-transparent"></div>
@@ -215,27 +220,27 @@ export default function Home(searchParams: Record<string, string>) {
                             <ul className="flex flex-col gap-3 text-base">
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/about" target="_self" data-test-id="nav-link" tabIndex="0">About us</a></li>
+                                    <a href="/about" target="_self" data-test-id="nav-link" tabIndex={0}>About us</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/company/awards" target="_self" data-test-id="nav-link" tabIndex="0">Awards</a>
+                                    <a href="/company/awards" target="_self" data-test-id="nav-link" tabIndex={0}>Awards</a>
                                 </li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                     <a href="/company/social-responsibility" target="_self" data-test-id="nav-link"
-                                        tabIndex="0">Social responsibility</a></li>
+                                        tabIndex={0}>Social responsibility</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
-                                    <a href="/company/press" target="_self" data-test-id="nav-link" tabIndex="0">Press
+                                    <a href="/company/press" target="_self" data-test-id="nav-link" tabIndex={0}>Press
                                         releases</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                     <a href="/company/careers" target="_self" data-test-id="nav-link"
-                                        tabIndex="0">Careers</a></li>
+                                        tabIndex={0}>Careers</a></li>
                                 <li
                                     className="flex items-center gap-3 transition-colors duration-200 hover:text-violet-300">
                                     <a href="/company/contact-us" target="_self" data-test-id="nav-link"
-                                        tabIndex="0">Contact</a></li>
+                                        tabIndex={0}>Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -338,10 +343,10 @@ export default function Home(searchParams: Record<string, string>) {
       {/* Product Showcase Section */}
       {getEntry?.page_components?.map((pageComponent, key: number) => <RenderComponents
               key={`component-${key}`}
-              pageComponent={pageComponent}
               entryUid={getEntry.uid}
               contentTypeUid={process.env.NEXT_PUBLIC_CONTENTSTACK_WEBPAGE_CONTENTTYPE_UID as string}
               locale={getEntry.locale}
+              pageComponent={pageComponent}
             ></RenderComponents>
       )}
 
@@ -471,7 +476,7 @@ export default function Home(searchParams: Record<string, string>) {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="text-purple-600 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
+                  {/* {feature.icon} */}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
