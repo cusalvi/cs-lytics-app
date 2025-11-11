@@ -1,7 +1,7 @@
 
 'use client';
 
-import Personalize from '@contentstack/personalize-edge-sdk';
+import Personalize from '@contentstack/personalize-edge-sdk/dist';
 import { Sdk } from '@contentstack/personalize-edge-sdk/dist/sdk';
 
 import {
@@ -19,7 +19,12 @@ export function PersonalizeProvider({ children }: { children: React.ReactNode })
   const [sdk, setSdk] = useState<Sdk | null>(null);
 
   useEffect(() => {
-    getPersonalizeInstance().then(setSdk);
+    getPersonalizeInstance()
+      .then(setSdk)
+      .catch((error) => {
+        console.error('Error initializing Personalize SDK in provider:', error);
+        setSdk(null);
+      });
   }, []);
 
   return (
@@ -34,8 +39,25 @@ export function usePersonalize() {
 }
 
 export async function getPersonalizeInstance() {
-  if (!Personalize.getInitializationStatus()) {
-    sdkInstance = await Personalize.init(process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_PROJECT_UID as string);
+  const projectUid = process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_PROJECT_UID as string;
+  
+  if (!projectUid) {
+    console.warn('NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_PROJECT_UID is not set. Personalization will not work.');
+    return null;
   }
-  return sdkInstance;
+  
+  try {
+    // Set edge API URL if provided
+    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_EDGE_API_URL) {
+      Personalize.setEdgeApiUrl(process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_EDGE_API_URL);
+    }
+    
+    if (!Personalize.getInitializationStatus()) {
+      sdkInstance = await Personalize.init(projectUid);
+    }
+    return sdkInstance;
+  } catch (error) {
+    console.error('Failed to initialize Personalize SDK:', error);
+    return null;
+  }
 }

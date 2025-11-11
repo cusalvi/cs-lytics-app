@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { getEntries } from "../../helper/getEntries"
 // import { fetchHomePage, initializeLP, Stack } from "./cs-sdk/index.js";
 // import { ChevronDown, Play, ArrowRight, Menu, X, Star, Users, Globe, Zap } from "lucide-react"
-import Personalize from "@contentstack/personalize-edge-sdk";
+import Personalize from "@contentstack/personalize-edge-sdk/dist";
 // import "./page.css"
 import RenderComponents from "../../components/render-components";
 import { Component } from "../../typescript/component";

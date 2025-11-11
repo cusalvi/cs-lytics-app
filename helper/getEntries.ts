@@ -3,25 +3,25 @@ import { cache } from 'react';
 import contentstack from '@contentstack/delivery-sdk';
 // import contentstack from 'contentstack';
 
-import Personalize from '@contentstack/personalize-edge-sdk';
+import Personalize from '@contentstack/personalize-edge-sdk/dist';
 
 
 const _getEntries = async (contentType: string, query: Record<string, any>, variantParam?: string | undefined) => {
   console.log("process.env.NODE_ENV and api_key", process.env.NODE_ENV, process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY, contentType);
   if (!process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY) {
-    throw Error('CONTENTSTACK_API_KEY is missing');
+    throw Error('NEXT_PUBLIC_CONTENTSTACK_API_KEY is missing');
   }
 
   if (!process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN) {
-    throw Error('CONTENTSTACK_DELIVERY_TOKEN is missing');
+    throw Error('NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN is missing');
   }
 
   if (!process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT) {
-    throw Error('CONTENTSTACK_DELIVERY_TOKEN is missing');
+    throw Error('NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT is missing');
   }
 
   if (!process.env.NEXT_PUBLIC_CONTENTSTACK_WEBPAGE_CONTENTTYPE_UID) {
-    throw Error('CONTENTSTACK_WEBPAGE_CONTENTTYPE_UID is missing');
+    throw Error('NEXT_PUBLIC_CONTENTSTACK_WEBPAGE_CONTENTTYPE_UID is missing');
   }
 
   try {
@@ -52,4 +52,4 @@ const _getEntries = async (contentType: string, query: Record<string, any>, vari
   }
 };
 
-export const getEntries = _getEntries;
+export const getEntries = cache(_getEntries);

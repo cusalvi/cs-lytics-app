@@ -6,9 +6,18 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.contentstack.io',
+        hostname: 'eu-images.contentstack.com',
       },
     ],
+  },
+  // Fix source map issues with external packages
+  productionBrowserSourceMaps: false,
+  webpack: (config, { isServer, dev }) => {
+    // Disable source maps for server-side builds to avoid issues with external packages
+    if (isServer && !dev) {
+      config.devtool = false;
+    }
+    return config;
   },
   async headers() {
     return [

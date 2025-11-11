@@ -7,11 +7,17 @@ import Personalize from '@contentstack/personalize-edge-sdk';
   
 export default async function middleware(req: NextRequest) {
   
-    const projectUid = process.env.NEXT_PUBLIC_PERSONALIZATION_PROJECT_UID as string;
+    const projectUid = process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_PROJECT_UID as string;
+  
+    // Check if project UID is available before initializing
+    if (!projectUid) {
+      console.warn('NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_PROJECT_UID is not set. Skipping personalization.');
+      return NextResponse.next();
+    }
   
     // set a custom edge API URL
-    if (process.env.CONTENTSTACK_PERSONALIZE_EDGE_API_URL) {
-        Personalize.setEdgeApiUrl(process.env.CONTENTSTACK_PERSONALIZE_EDGE_API_URL);
+    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_EDGE_API_URL) {
+        Personalize.setEdgeApiUrl(process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_EDGE_API_URL);
     }
   
     // Initialize the SDK and pass the request as well
