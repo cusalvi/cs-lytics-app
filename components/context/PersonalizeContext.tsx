@@ -1,7 +1,7 @@
 
 'use client';
 
-import Personalize from '@contentstack/personalize-edge-sdk/dist';
+import Personalize from '@contentstack/personalize-edge-sdk';
 import { Sdk } from '@contentstack/personalize-edge-sdk/dist/sdk';
 
 import {

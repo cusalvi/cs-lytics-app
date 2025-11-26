@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { getEntries } from "../../helper/getEntries"
 // import { fetchHomePage, initializeLP, Stack } from "./cs-sdk/index.js";
 // import { ChevronDown, Play, ArrowRight, Menu, X, Star, Users, Globe, Zap } from "lucide-react"
-import Personalize from "@contentstack/personalize-edge-sdk/dist";
+import Personalize from "@contentstack/personalize-edge-sdk";
 // import "./page.css"
 import RenderComponents from "../../components/render-components";
 import { Component } from "../../typescript/component";
+import { usePersonalize } from "../../components/context/PersonalizeContext";
 // import { Image } from "../typescript/action";
 // import { Entry, HeaderProps ,FooterProps } from "./layout";
 
@@ -30,32 +31,47 @@ export default function Home(searchParams: Record<string, string>) {
   // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [scrollY, setScrollY] = useState<number>(0);
   const [getEntry, setEntry] = useState<page>();
+  const personalizeSdk = usePersonalize();
   
 // personalize
 
   async function getDataForWebpage(){
-    // let psl = await Personalize.init("68cd07a52aadb24f2c3c5cdd", {
-    //     // liveAttributes : {
-    //     //   [role] : true
-    //     // }
-    //   });
-    // let varaliases = await psl.getVariantAliases();
-    console.log("searchParams---->", Personalize.VARIANT_QUERY_PARAM, searchParams[Personalize.VARIANT_QUERY_PARAM]);
-          
-    // let variantParam = decodeURIComponent(
-    //   searchParams[Personalize.VARIANT_QUERY_PARAM]
-    // );
+    let variantParam: string | null = null;
     
-    // let lyticsSegments = jstag.getSegments();
-
-    // Identify/extract current segment from lyticsSegments and assign variantParam accordingly
-    // For Chrome = 0_0
-    // For Firefox = 0_1
-    const variantParam = "0_0";
+    // Method 1: Get variantParam from Personalize SDK (recommended)
+    if (personalizeSdk) {
+      let lyticsSegments = (window as any).jstag?.getSegments?.() as any[] || [];
+      console.log("lyticsSegments---->", lyticsSegments);
+      try {
+        variantParam = personalizeSdk.getVariantParam();
+        let experiences = personalizeSdk.getExperiences(); 
+        console.log("variantParam, experiences from SDK---->", variantParam, experiences, personalizeSdk);
+      } catch (error) {
+        console.warn("Error getting variantParam from SDK:", error);
+      }
+    }
+    
+    // Method 2: Fallback to URL search params (set by middleware)
+    // if (!variantParam && searchParams[Personalize.VARIANT_QUERY_PARAM]) {
+    //   try {
+    //     variantParam = decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
+    //     console.log("variantParam from URL---->", variantParam);
+    //   } catch (error) {
+    //     variantParam = searchParams[Personalize.VARIANT_QUERY_PARAM];
+    //   }
+    // }
+    
+    // Final fallback to default
+    // if (!variantParam) {
+    //   variantParam = "0_0";
+    // }
+    
+    // console.log("Final variantParam---->", variantParam);
+    
     const [homepageEntry] = await getEntries(
       process.env.NEXT_PUBLIC_CONTENTSTACK_WEBPAGE_CONTENTTYPE_UID as string,
       {},
-      variantParam,
+      variantParam ?? undefined,
     ) as any[];
 
       console.log("homepageEntry------->", homepageEntry);
@@ -65,7 +81,7 @@ export default function Home(searchParams: Record<string, string>) {
     // const experienceShortUids = (process.env.NEXT_PUBLIC_CONTENTSTACK_WEBPAGE_EXPERIENCES as string).split(',');
     // console.log("Params experienceShortUids---->", experienceShortUids)
     getDataForWebpage();
-  },[])
+  }, [personalizeSdk]) // Re-run when SDK is initialized
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener("scroll", handleScroll)
@@ -515,10 +531,19 @@ export default function Home(searchParams: Record<string, string>) {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">C</span>
-                </div>
-                <span className="text-xl font-bold">CONTENTSTACK</span>
+                <a className="flex items-center" href="/">
+                    <div className="flex w-fit max-w-15 items-center px-0">
+                        <Image
+                          className="dark size-6 w-fit"
+                          src="/CS_OnlyLogo.webp"
+                          alt="Contentstack logo"
+                          width={60}
+                          height={60}
+                          priority
+                      />
+                    </div>
+                    <span className="ml-0.5 text-xl font-bold">CONTENTSTACK</span>
+                </a>
               </div>
               <p className="text-gray-400">The composable content platform for modern digital experiences.</p>
             </div>
